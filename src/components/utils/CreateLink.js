@@ -16,6 +16,16 @@ export const Link = (props) => {
     );
 };
 
+// export const Link = (props) => {
+//     const { url } = Entity.get(props.entityKey).getData();
+//
+//     return (
+//         <div onMouseDown={(e) => {e.preventDefault()}}>
+//             <input></input>
+//         </div>
+//     );
+// }
+
 const LINK = (
     <span className="TextEditor-controls-button">
         <i className="fa fa-link" aria-hidden="true"></i>

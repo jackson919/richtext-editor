@@ -38,7 +38,7 @@ constructor(props) {
 
               <hr />
 
-              <pre style={{width: '600px', maxWidth: '600px', 'overflow-x': 'scroll'}}>
+              <pre style={{width: '600px', maxWidth: '600px', 'overflowX': 'scroll'}}>
                   {this.state.value}
               </pre>
           </div>

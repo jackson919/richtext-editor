@@ -30,7 +30,7 @@ const LINK = (
 const INLINE_STYLES = [
    { label: BOLD, style: 'BOLD' },
    { label: ITALIC, style: 'ITALIC' },
-   { label: UNDERLINE, style: 'UNDERLINE' },
+   { label: UNDERLINE, style: 'UNDERLINE' }
    // { label: LINK, style: 'LINK' }
 ];
 

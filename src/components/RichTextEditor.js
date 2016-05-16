@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, Entity, ContentState, CompositeDecorator, RichUtils, convertToRaw, convertFromHTML } from 'draft-js';
+import { Editor, EditorState, Entity, ContentState, CompositeDecorator, RichUtils, convertToRaw, convertFromHTML, Modifier } from 'draft-js';
 import { InlineStyleControls } from './utils/InlineStyleControls';
 import { stateToHTML } from 'draft-js-export-html';
 import { Link, CreateLinkControl } from './utils/CreateLink';
+import { Superscript, SuperscriptControl } from './utils/Superscript';
+import { Subscript, SubscriptControl } from './utils/Subscript';
 import './richTextEditor.scss';
 // import 'font-awesome/css/font-awesome.css';
 
@@ -25,10 +27,40 @@ export default class RichTextEditor extends Component {
         );
         };
 
+        const subscriptStrategy = (contentBlock, callback) => {
+            contentBlock.findEntityRanges((character) => {
+                const entityKey = character.getEntity();
+                return (
+                    entityKey !== null && Entity.get(entityKey).getType() === 'SUBSCRIPT'
+                );
+            },
+            callback
+        );
+        };
+
+        const superscriptStrategy = (contentBlock, callback) => {
+            contentBlock.findEntityRanges((character) => {
+                const entityKey = character.getEntity();
+                return (
+                    entityKey !== null && Entity.get(entityKey).getType() === 'SUPERSCRIPT'
+                );
+            },
+            callback
+        );
+        };
+
         const decorator = new CompositeDecorator([
             {
                 strategy: findLinkEntities,
                 component: Link
+            },
+            {
+                strategy: superscriptStrategy,
+                component: Superscript
+            },
+            {
+                strategy: subscriptStrategy,
+                component: Subscript
             }
         ]);
 
@@ -49,6 +81,15 @@ export default class RichTextEditor extends Component {
         this.toggleBlockType = (type) => this._toggleBlockType(type);
         this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
         this.toggleLink = () => this._toggleLink();
+        this.toggleSuper = () => this._toggleSuper();
+        this.toggleSub = () => this._toggleSub();
+        this.getContentState = () => this._getContentState();
+
+    }
+
+    _getContentState() {
+        const { editorState } = this.state;
+        return editorState.getCurrentContent();
     }
 
     _handleKeyCommand(command) {
@@ -71,6 +112,7 @@ export default class RichTextEditor extends Component {
 
     _toggleInlineStyle(inlineStyle) {
         const { editorState } = this.state;
+
         this.onChange(
             RichUtils.toggleInlineStyle(editorState, inlineStyle)
         );
@@ -86,12 +128,32 @@ export default class RichTextEditor extends Component {
         )
     }
 
+    _toggleSuper() {
+        const { editorState } = this.state;
+        const entityKey = Entity.create('SUPERSCRIPT', 'MUTABLE');
+        const selectionState = editorState.getSelection();
+
+        this.onChange(
+            RichUtils.toggleLink(editorState, selectionState, entityKey)
+        )
+    }
+
+    _toggleSub() {
+        const { editorState } = this.state;
+        const entityKey = Entity.create('SUBSCRIPT', 'MUTABLE');
+        const selectionState = editorState.getSelection();
+
+        this.onChange(
+            RichUtils.toggleLink(editorState, selectionState, entityKey)
+        )
+    }
+
     _onChange(editorState) {
         const newValue = this.setState({ editorState: editorState });
         this.props.onValueChange(newValue);
     }
 
-    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink) {
+    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink, toggleSub, toggleSuper) {
         return (
             <div className="TextEditor-controls-bar">
                 <InlineStyleControls
@@ -101,6 +163,14 @@ export default class RichTextEditor extends Component {
                 <CreateLinkControl
                     editorState={editorState}
                     onToggle={toggleLink}
+                />
+                <SubscriptControl
+                    editorState={editorState}
+                    onToggle={toggleSub}
+                />
+                <SuperscriptControl
+                    editorState={editorState}
+                    onToggle={toggleSuper}
                 />
                 <BlockStyleControls
                     editorState={editorState}
@@ -141,7 +211,14 @@ export default class RichTextEditor extends Component {
 
         return (
             <div className="TextEditor-root">
-                {this._renderControls(editorState, this.toggleInlineStyle, this.toggleBlockType, this.toggleLink)}
+                {this._renderControls(
+                    editorState,
+                    this.toggleInlineStyle,
+                    this.toggleBlockType,
+                    this.toggleLink,
+                    this.toggleSub,
+                    this.toggleSuper
+                )}
                 <div className={className} onClick={this.focus}>
                     <Editor
                         editorState={editorState}
