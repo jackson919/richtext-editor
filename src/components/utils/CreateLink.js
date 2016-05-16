@@ -41,8 +41,6 @@ export class CreateLinkControl extends React.Component {
 
     // const currentStyle = props.editorState.getCurrentInlineStyle();
     render() {
-        console.log('editorstate', this.props.editorState.getSelection().isCollapsed());
-
         return (
             <div className="TextEditor-controls-bar">
                 <StyleButton

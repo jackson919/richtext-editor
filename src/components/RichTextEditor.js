@@ -7,6 +7,7 @@ import { Superscript, SuperscriptControl } from './utils/Superscript';
 import { Subscript, SubscriptControl } from './utils/Subscript';
 import './richTextEditor.scss';
 // import 'font-awesome/css/font-awesome.css';
+import { composeCompositeDecorator, LinkDecorator, SuperscriptDecorator, SubscriptDecorator } from './utils/decoratorStrategies';
 
 // NOTE: BlockStyleControls is a WIP, so it's commented out.
 import { BlockStyleControls } from './utils/BlockStyleControls';
@@ -16,53 +17,7 @@ export default class RichTextEditor extends Component {
     constructor(props) {
         super(props);
 
-        const findLinkEntities = (contentBlock, callback) => {
-            contentBlock.findEntityRanges((character) => {
-                const entityKey = character.getEntity();
-                return (
-                    entityKey !== null && Entity.get(entityKey).getType() === 'LINK'
-                );
-            },
-            callback
-        );
-        };
-
-        const subscriptStrategy = (contentBlock, callback) => {
-            contentBlock.findEntityRanges((character) => {
-                const entityKey = character.getEntity();
-                return (
-                    entityKey !== null && Entity.get(entityKey).getType() === 'SUBSCRIPT'
-                );
-            },
-            callback
-        );
-        };
-
-        const superscriptStrategy = (contentBlock, callback) => {
-            contentBlock.findEntityRanges((character) => {
-                const entityKey = character.getEntity();
-                return (
-                    entityKey !== null && Entity.get(entityKey).getType() === 'SUPERSCRIPT'
-                );
-            },
-            callback
-        );
-        };
-
-        const decorator = new CompositeDecorator([
-            {
-                strategy: findLinkEntities,
-                component: Link
-            },
-            {
-                strategy: superscriptStrategy,
-                component: Superscript
-            },
-            {
-                strategy: subscriptStrategy,
-                component: Subscript
-            }
-        ]);
+        const decorator = composeCompositeDecorator([LinkDecorator, SuperscriptDecorator, SubscriptDecorator]);
 
         this.createEditorState = (val, dec) => this._createEditorState(val, dec);
         this.focus = () => this.refs.editor.focus();
