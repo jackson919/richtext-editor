@@ -33,7 +33,9 @@ export default class StyleDropdown extends React.Component {
             <select onChange={this._changeSelectHandler.bind(this)}>
                 {this.props.blockTypes.map((type) => {
                     return (
-                        <option key={type.label} value={type.label}>{type.label}</option>
+                        <option key={type.label} value={type.label}>
+                            {type.label}
+                        </option>
                     )
                 })}
             </select>

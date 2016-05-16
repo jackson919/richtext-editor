@@ -81,19 +81,9 @@ export default class RichTextEditor extends Component {
         const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
         const selectionState = editorState.getSelection();
 
-        const invoke = () => {
-            console.log('**************');
-
-            if (!selectionState.isCollapsed()) {
-                console.log('set new link section');
-                RichUtils.toggleLink(editorState, selectionState, entityKey);
-            } else {
-                console.log('set new link section');
-                RichUtils.toggleLink(editorState, selectionState, null);
-            }
-        };
-
-        this.onChange(invoke());
+        this.onChange(
+            RichUtils.toggleLink(editorState, selectionState, entityKey)
+        )
     }
 
     _onChange(editorState) {
