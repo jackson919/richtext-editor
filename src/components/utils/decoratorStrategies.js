@@ -32,17 +32,6 @@ const subscriptStrategy = (contentBlock, callback) => {
     callback
     );
 };
-//
-//
-//     contentBlock.findEntityRanges((character) => {
-//         const entityKey = character.getEntity();
-//             return (
-//                 entityKey !== null && Entity.get(entityKey).getType() === 'SUBSCRIPT'
-//             );
-//         },
-//     callback
-//     );
-// };
 
 const superscriptStrategy = (contentBlock, callback) => {
     contentBlock.findStyleRanges((character) => {
@@ -52,17 +41,6 @@ const superscriptStrategy = (contentBlock, callback) => {
     callback
     );
 };
-//
-//  const superscriptStrategy = (contentBlock, callback) => {
-//     contentBlock.findEntityRanges((character) => {
-//         const entityKey = character.getEntity();
-//             return (
-//                 entityKey !== null && Entity.get(entityKey).getType() === 'SUPERSCRIPT'
-//             );
-//         },
-//     callback
-//     );
-// };
 
 /**
  * The following object literals follow the CompositeDecorator format.
