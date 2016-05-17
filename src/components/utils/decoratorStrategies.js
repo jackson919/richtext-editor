@@ -25,27 +25,44 @@ const findLinkEntities = (contentBlock, callback) => {
     );
 };
 
- const subscriptStrategy = (contentBlock, callback) => {
-    contentBlock.findEntityRanges((character) => {
-        const entityKey = character.getEntity();
-            return (
-                entityKey !== null && Entity.get(entityKey).getType() === 'SUBSCRIPT'
-            );
-        },
+const subscriptStrategy = (contentBlock, callback) => {
+    contentBlock.findStyleRanges((character) => {
+        return character.hasStyle('SUBSCRIPT');
+    },
     callback
     );
 };
+//
+//
+//     contentBlock.findEntityRanges((character) => {
+//         const entityKey = character.getEntity();
+//             return (
+//                 entityKey !== null && Entity.get(entityKey).getType() === 'SUBSCRIPT'
+//             );
+//         },
+//     callback
+//     );
+// };
 
- const superscriptStrategy = (contentBlock, callback) => {
-    contentBlock.findEntityRanges((character) => {
-        const entityKey = character.getEntity();
-            return (
-                entityKey !== null && Entity.get(entityKey).getType() === 'SUPERSCRIPT'
-            );
-        },
+const superscriptStrategy = (contentBlock, callback) => {
+    contentBlock.findStyleRanges((character) => {
+        console.log(character)
+        return character.hasStyle('SUPERSCRIPT');
+    },
     callback
     );
 };
+//
+//  const superscriptStrategy = (contentBlock, callback) => {
+//     contentBlock.findEntityRanges((character) => {
+//         const entityKey = character.getEntity();
+//             return (
+//                 entityKey !== null && Entity.get(entityKey).getType() === 'SUPERSCRIPT'
+//             );
+//         },
+//     callback
+//     );
+// };
 
 /**
  * The following object literals follow the CompositeDecorator format.

@@ -7,7 +7,7 @@ import { Superscript, SuperscriptControl } from './utils/Superscript';
 import { Subscript, SubscriptControl } from './utils/Subscript';
 import './richTextEditor.scss';
 // import 'font-awesome/css/font-awesome.css';
-import { composeCompositeDecorator, LinkDecorator, SuperscriptDecorator, SubscriptDecorator } from './utils/decoratorStrategies';
+import { createDecorators, LinkDecorator, SuperscriptDecorator, SubscriptDecorator } from './utils/decoratorStrategies';
 
 // NOTE: BlockStyleControls is a WIP, so it's commented out.
 import { BlockStyleControls } from './utils/BlockStyleControls';
@@ -17,7 +17,11 @@ export default class RichTextEditor extends Component {
     constructor(props) {
         super(props);
 
-        const decorator = composeCompositeDecorator([LinkDecorator, SuperscriptDecorator, SubscriptDecorator]);
+        const decorator = createDecorators([
+            LinkDecorator,
+            SuperscriptDecorator,
+            SubscriptDecorator
+        ]);
 
         this.createEditorState = (val, dec) => this._createEditorState(val, dec);
         this.focus = () => this.refs.editor.focus();
@@ -38,13 +42,6 @@ export default class RichTextEditor extends Component {
         this.toggleLink = () => this._toggleLink();
         this.toggleSuper = () => this._toggleSuper();
         this.toggleSub = () => this._toggleSub();
-        this.getContentState = () => this._getContentState();
-
-    }
-
-    _getContentState() {
-        const { editorState } = this.state;
-        return editorState.getCurrentContent();
     }
 
     _handleKeyCommand(command) {
@@ -67,7 +64,6 @@ export default class RichTextEditor extends Component {
 
     _toggleInlineStyle(inlineStyle) {
         const { editorState } = this.state;
-
         this.onChange(
             RichUtils.toggleInlineStyle(editorState, inlineStyle)
         );
@@ -77,30 +73,34 @@ export default class RichTextEditor extends Component {
         const { editorState, urlValue } = this.state;
         const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
         const selectionState = editorState.getSelection();
-
         this.onChange(
             RichUtils.toggleLink(editorState, selectionState, entityKey)
         )
     }
 
-    _toggleSuper() {
+    _toggleSuper(style) {
         const { editorState } = this.state;
-        const entityKey = Entity.create('SUPERSCRIPT', 'MUTABLE');
-        const selectionState = editorState.getSelection();
-
+        // const entityKey = Entity.create('SUPERSCRIPT', 'MUTABLE');
+        // const selectionState = editorState.getSelection();
         this.onChange(
-            RichUtils.toggleLink(editorState, selectionState, entityKey)
+            RichUtils.toggleInlineStyle(editorState, style)
+            // RichUtils.toggleLink(editorState, selectionState, entityKey)
         )
     }
 
-    _toggleSub() {
+    _toggleSub(style) {
         const { editorState } = this.state;
-        const entityKey = Entity.create('SUBSCRIPT', 'MUTABLE');
-        const selectionState = editorState.getSelection();
+        // const entityKey = Entity.create('SUBSCRIPT', 'MUTABLE');
+        // const selectionState = editorState.getSelection();
 
         this.onChange(
-            RichUtils.toggleLink(editorState, selectionState, entityKey)
+            RichUtils.toggleInlineStyle(editorState, style)
+            // RichUtils.toggleLink(editorState, selectionState, entityKey)
         )
+
+        // this.onChange(
+        //     RichUtils.toggleLink(editorState, selectionState, entityKey)
+        // )
     }
 
     _onChange(editorState) {
@@ -121,11 +121,11 @@ export default class RichTextEditor extends Component {
                 />
                 <SubscriptControl
                     editorState={editorState}
-                    onToggle={toggleSub}
+                    onToggle={toggleInlineStyle}
                 />
                 <SuperscriptControl
                     editorState={editorState}
-                    onToggle={toggleSuper}
+                    onToggle={toggleInlineStyle}
                 />
                 <BlockStyleControls
                     editorState={editorState}

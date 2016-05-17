@@ -4,7 +4,7 @@ import StyleButton from './StyleButton';
 
 export const Superscript = (props) => {
     return (
-        <span {...props}>
+        <span>
             <sup>
                 {props.children}
             </sup>
@@ -18,16 +18,18 @@ const SUPERSCRIPT = (
     </span>
 );
 
-export class SuperscriptControl extends React.Component {
-    render() {
-        return (
-            <div className="TextEditor-controls-bar">
-                <StyleButton
-                    label={SUPERSCRIPT}
-                    onToggle={this.props.onToggle}
-                    style={'SUPERSCRIPT'}
-                />
-            </div>
-        );
-    }
-}
+export const SuperscriptControl = (props) => {
+    const { editorState } = props;
+    const currentStyle = editorState.getCurrentInlineStyle();
+
+    return (
+        <div className="TextEditor-controls-bar">
+            <StyleButton
+                active={currentStyle.has('SUPERSCRIPT')}
+                label={SUPERSCRIPT}
+                onToggle={props.onToggle}
+                style={'SUPERSCRIPT'}
+            />
+        </div>
+    );
+};

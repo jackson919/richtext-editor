@@ -28,7 +28,7 @@ constructor(props) {
     const { counter, actions } = this.props;
     return (
       <div className="main-app-container">
-          <div className="main-app-nav">React Rich Text Editor</div>
+          <div className="main-app-nav">RTE</div>
           <div>
               <br />
               <RichTextEditor
@@ -42,7 +42,7 @@ constructor(props) {
                   {this.state.value}
               </pre>
           </div>
-          <Footer />
+          {/*<Footer />*/}
       </div>
     );
   }

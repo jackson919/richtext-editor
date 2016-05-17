@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react';
 import StyleButton from './StyleButton';
 
@@ -21,17 +20,10 @@ const UNDERLINE = (
     </span>
 );
 
-const LINK = (
-    <span className="TextEditor-controls-button">
-        <i className="fa fa-underline" aria-hidden="true"></i>
-    </span>
-);
-
 const INLINE_STYLES = [
    { label: BOLD, style: 'BOLD' },
    { label: ITALIC, style: 'ITALIC' },
    { label: UNDERLINE, style: 'UNDERLINE' }
-   // { label: LINK, style: 'LINK' }
 ];
 
 export const InlineStyleControls = (props) => {
