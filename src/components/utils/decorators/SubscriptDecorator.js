@@ -1,6 +1,4 @@
 import React from 'react';
-import { Entity } from 'draft-js';
-import StyleButton from '../StyleButton';
 
 export const Subscript = (props) => {
     return (
@@ -10,4 +8,4 @@ export const Subscript = (props) => {
             </sub>
         </span>
     );
-}
+};
