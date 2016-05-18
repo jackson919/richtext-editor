@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import StyleButton from './StyleButton';
+import StyleButton from '../StyleButton';
 
 const BOLD = (
     <span className="TextEditor-controls-button">
@@ -20,10 +20,24 @@ const UNDERLINE = (
     </span>
 );
 
+const SUBSCRIPT = (
+    <span className="TextEditor-controls-button">
+        <i className="fa fa-subscript" aria-hidden="true"></i>
+    </span>
+);
+
+const SUPERSCRIPT = (
+    <span className="TextEditor-controls-button">
+        <i className="fa fa-superscript" aria-hidden="true"></i>
+    </span>
+);
+
 const INLINE_STYLES = [
    { label: BOLD, style: 'BOLD' },
    { label: ITALIC, style: 'ITALIC' },
-   { label: UNDERLINE, style: 'UNDERLINE' }
+   { label: UNDERLINE, style: 'UNDERLINE' },
+   { label: SUBSCRIPT, style: 'SUBSCRIPT' },
+   { label: SUPERSCRIPT, style: 'SUPERSCRIPT' }
 ];
 
 export const InlineStyleControls = (props) => {

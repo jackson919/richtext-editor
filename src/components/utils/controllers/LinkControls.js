@@ -1,6 +1,6 @@
 import React from 'react';
 import { Entity, convertToRaw } from 'draft-js';
-import StyleButton from './StyleButton';
+import StyleButton from '../StyleButton';
 import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 
 export const Link = (props) => {

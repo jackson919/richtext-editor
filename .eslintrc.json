@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "globals": {
+    "_": false,
+    "$": false,
+    "define": false,
+    "Backbone": false
+  },
+  "rules": {
+    "indent": ["error", 4],
+    "comma-dangle": 0,
+    "arrow-body-style": 0,
+    "object-shorthand": 1,
+    "space-infix-ops": 0,
+    "react/prop-types": 1,
+    "react/jsx-indent-props": ["error", 4],
+    "react/prefer-stateless-function": 1,
+    "no-else-return": 1,
+    "react/jsx-no-duplicate-props": 2
+  }
+}

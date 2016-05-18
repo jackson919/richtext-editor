@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, Entity, ContentState, CompositeDecorator, RichUtils, convertToRaw, convertFromHTML, Modifier } from 'draft-js';
-import { InlineStyleControls } from './utils/InlineStyleControls';
+import {
+    Editor,
+    EditorState,
+    Entity,
+    ContentState,
+    RichUtils,
+    convertToRaw,
+    convertFromHTML
+} from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { Link, CreateLinkControl, getSelectedLink } from './utils/CreateLink';
-import { Superscript, SuperscriptControl } from './utils/Superscript';
-import { Subscript, SubscriptControl } from './utils/Subscript';
-import { BlockStyleControls } from './utils/BlockStyleControls';
-import { BlockStyleDropdownControls } from './utils/BlockStyleDropdownControls';
-import { createDecorators, LinkDecorator, SuperscriptDecorator, SubscriptDecorator } from './utils/decoratorStrategies';
+import { InlineStyleControls } from './utils/controllers/InlineStyleControls';
+import { CreateLinkControl } from './utils/controllers/LinkControls';
+import { BlockStyleControls } from './utils/controllers/BlockStyleControls';
+import { BlockStyleDropdownControls } from './utils/controllers/BlockStyleDropdownControls';
+import { getSelectedLink } from './utils/decorators/LinkDecorator';
+import {
+    createDecorators,
+    LinkDecorator,
+    SuperscriptDecorator,
+    SubscriptDecorator
+} from './utils/decorators/decoratorStrategies';
 import './richTextEditor.scss';
 
 export default class RichTextEditor extends Component {
@@ -73,14 +85,14 @@ export default class RichTextEditor extends Component {
         let entityKey = getSelectedLink(editorState, selectionState);
 
         if (entityKey === null) {
-            entityKey = Entity.create('LINK', 'MUTABLE', {url: 'www.google.com'})
+            entityKey = Entity.create('LINK', 'MUTABLE', { url: 'www.google.com' });
         } else {
             entityKey = null;
         }
 
         this.onChange(
             RichUtils.toggleLink(editorState, selectionState, entityKey)
-        )
+        );
     }
 
     _onChange(editorState) {
@@ -88,7 +100,7 @@ export default class RichTextEditor extends Component {
         this.props.onValueChange(newValue);
     }
 
-    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink, toggleSub, toggleSuper) {
+    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink) {
         return (
             <div className="TextEditor-controls-bar">
                 <InlineStyleControls
@@ -98,14 +110,6 @@ export default class RichTextEditor extends Component {
                 <CreateLinkControl
                     editorState={editorState}
                     onToggle={toggleLink}
-                />
-                <SubscriptControl
-                    editorState={editorState}
-                    onToggle={toggleInlineStyle}
-                />
-                <SuperscriptControl
-                    editorState={editorState}
-                    onToggle={toggleInlineStyle}
                 />
                 <BlockStyleControls
                     editorState={editorState}
@@ -166,8 +170,6 @@ export default class RichTextEditor extends Component {
             </div>
         );
     }
-
-
 }
 
 function createEmptyValue() {

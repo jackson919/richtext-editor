@@ -3,13 +3,13 @@ import React from 'react';
 export default class StyleDropdown extends React.Component {
     constructor() {
         super();
+        this.changeSelectHandler = (event) => this._changeSelectHandler(event);
     }
 
     _changeSelectHandler(event) {
         event.preventDefault();
-        let value = event.target.value;
-
-        let style = this.props.blockTypes.reduce((result, type) => {
+        const value = event.target.value;
+        const style = this.props.blockTypes.reduce((result, type) => {
             if (!!result) {
                 return result;
             } else if (type.label === value) {
@@ -30,13 +30,13 @@ export default class StyleDropdown extends React.Component {
         }
 
         return (
-            <select onChange={this._changeSelectHandler.bind(this)}>
+            <select onChange={this.changeSelectHandler}>
                 {this.props.blockTypes.map((type) => {
                     return (
                         <option key={type.label} value={type.label}>
                             {type.label}
                         </option>
-                    )
+                    );
                 })}
             </select>
         );

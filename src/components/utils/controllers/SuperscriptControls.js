@@ -1,22 +1,5 @@
 import React from 'react';
-import { Entity, convertToRaw } from 'draft-js';
-import StyleButton from './StyleButton';
-
-export const Superscript = (props) => {
-    return (
-        <span>
-            <sup>
-                {props.children}
-            </sup>
-        </span>
-    );
-}
-
-const SUPERSCRIPT = (
-    <span className="TextEditor-controls-button">
-        <i className="fa fa-superscript" aria-hidden="true"></i>
-    </span>
-);
+import StyleButton from '../StyleButton';
 
 export const SuperscriptControl = (props) => {
     const { editorState } = props;
