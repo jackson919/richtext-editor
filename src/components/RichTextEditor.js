@@ -28,7 +28,7 @@ export default class RichTextEditor extends Component {
 
         this.state = {
             editorState: this.createEditorState(this.props.value, decorator),
-            urlValue: 'https://www.google.com'
+            urlValue: null
         };
 
         this.onChange = (editorState) => {
@@ -70,37 +70,22 @@ export default class RichTextEditor extends Component {
     }
 
     _toggleLink() {
-        const { editorState, urlValue } = this.state;
-        const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
+        const { editorState } = this.state;
+        const contentState = editorState.getCurrentContent();
         const selectionState = editorState.getSelection();
-        this.onChange(
-            RichUtils.toggleLink(editorState, selectionState, entityKey)
-        )
-    }
+        const startKey = selectionState.getStartKey();
 
-    _toggleSuper(style) {
-        const { editorState } = this.state;
-        // const entityKey = Entity.create('SUPERSCRIPT', 'MUTABLE');
-        // const selectionState = editorState.getSelection();
-        this.onChange(
-            RichUtils.toggleInlineStyle(editorState, style)
-            // RichUtils.toggleLink(editorState, selectionState, entityKey)
-        )
-    }
-
-    _toggleSub(style) {
-        const { editorState } = this.state;
-        // const entityKey = Entity.create('SUBSCRIPT', 'MUTABLE');
-        // const selectionState = editorState.getSelection();
-
-        this.onChange(
-            RichUtils.toggleInlineStyle(editorState, style)
-            // RichUtils.toggleLink(editorState, selectionState, entityKey)
-        )
-
-        // this.onChange(
-        //     RichUtils.toggleLink(editorState, selectionState, entityKey)
-        // )
+        if (!selectionState.isCollapsed()) {
+            const val = window.prompt('Please enter a url');
+            const entityKey = Entity.create('LINK', 'MUTABLE', { url: val });
+            this.onChange(
+                RichUtils.toggleLink(editorState, selectionState, entityKey)
+            )
+        } else {
+            this.onChange(
+                RichUtils.toggleLink(editorState, selectionState, null)
+            )
+        }
     }
 
     _onChange(editorState) {
