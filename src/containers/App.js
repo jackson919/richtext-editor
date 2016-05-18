@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as CounterActions from '../actions/CounterActions';
-import Counter from '../components/Counter';
+import RichTextEditor from '../components/RichTextEditor';
 import Footer from '../components/Footer';
 
 /**
@@ -11,15 +11,38 @@ import Footer from '../components/Footer';
  * component to make the Redux store available to the rest of the app.
  */
 export default class App extends Component {
+constructor(props) {
+    super(props);
+
+    this.onChange = (value) => {
+        this.setState({ value });
+    };
+
+    this.state = {
+        value: '<p><strong>Hello</strong> <em>World!</em></p>'
+    };
+}
+
   render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
     const { counter, actions } = this.props;
     return (
       <div className="main-app-container">
-        <div className="main-app-nav">Simple Redux Boilerplate</div>
-        {/* notice that we then pass those unpacked props into the Counter component */}
-        <Counter counter={counter} actions={actions} />
-        <Footer />
+          <div className="main-app-nav">RTE</div>
+          <div>
+              <br />
+              <RichTextEditor
+                  value={this.state.value}
+                  onValueChange={this.onChange}
+              />
+
+              <hr />
+
+              <pre style={{width: '600px', maxWidth: '600px', 'overflowX': 'scroll'}}>
+                  {this.state.value}
+              </pre>
+          </div>
+          {/*<Footer />*/}
       </div>
     );
   }

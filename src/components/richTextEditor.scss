@@ -1,0 +1,39 @@
+.TextEditor-root {
+    background: #fff;
+    border: 1px solid #ccc;
+    font-family: 'Source Sans Pro', serif;
+    font-size: 14px;
+    width: 600px;
+
+    .TextEditor-controls-bar {
+        background-color: #f5f5f5;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 2px;
+        padding-right: 2px;
+        display: inline-block;
+
+        .TextEditor-controls-button {
+            cursor: pointer;
+            text-align: center;
+            min-width: 20px;
+            margin: 4px;
+
+            &.TextEditor-controls-active {
+                .fa {
+                    color: #0097A7;
+                }
+            }
+        }
+    }
+
+    .TextEditor-editor {
+        border-top: 1px solid #ddd;
+        cursor: text;
+        font-size: 16px;
+        padding: 10px;
+        min-height: 100px;
+        overflow-x: scroll;
+        height: 200px;
+    }
+}
