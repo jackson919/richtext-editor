@@ -75,17 +75,23 @@ export default class RichTextEditor extends Component {
         const selectionState = editorState.getSelection();
         const startKey = selectionState.getStartKey();
 
-        if (!selectionState.isCollapsed()) {
-            const val = window.prompt('Please enter a url');
-            const entityKey = Entity.create('LINK', 'MUTABLE', { url: val });
-            this.onChange(
-                RichUtils.toggleLink(editorState, selectionState, entityKey)
-            )
-        } else {
-            this.onChange(
-                RichUtils.toggleLink(editorState, selectionState, null)
-            )
+        function getSelectedLink(selection) {
+            const currentBlock = editorState.getCurrentContent().getBlockForKey(selection.getStartKey());
+            const entityKey = currentBlock.getEntityAt(selection.getStartOffset());
+            return (entityKey !== null && Entity.get(entityKey).getType() === 'LINK') ? entityKey : null;
         }
+
+        let entityKey = getSelectedLink(selectionState);
+
+        if (entityKey === null) {
+            entityKey = Entity.create('LINK', 'MUTABLE', {url: 'www.google.com'})
+        } else {
+            entityKey = null;
+        }
+
+        this.onChange(
+            RichUtils.toggleLink(editorState, selectionState, entityKey)
+        )
     }
 
     _onChange(editorState) {

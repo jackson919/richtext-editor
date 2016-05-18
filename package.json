@@ -49,6 +49,7 @@
     "draft-js-export-html": "^0.1.13",
     "font-awesome": "^4.6.1",
     "react": "^0.14.3",
+    "react-bootstrap": "^0.29.4",
     "react-dom": "^0.14.3",
     "react-redux": "^4.1.1",
     "redux-thunk": "^1.0.3"
