@@ -17,7 +17,7 @@ export const Link = (props) => {
     );
 };
 
-const getSelectedLink = (editorState, selectionState) => {
+export const getSelectedLink = (editorState, selectionState) => {
     const currentBlock = editorState.getCurrentContent().getBlockForKey(selectionState.getStartKey());
     const entityKey = currentBlock.getEntityAt(selectionState.getStartOffset());
     return (entityKey !== null && Entity.get(entityKey).getType() === 'LINK') ? entityKey : null;

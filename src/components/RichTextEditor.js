@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { Editor, EditorState, Entity, ContentState, CompositeDecorator, RichUtils, convertToRaw, convertFromHTML, Modifier } from 'draft-js';
 import { InlineStyleControls } from './utils/InlineStyleControls';
 import { stateToHTML } from 'draft-js-export-html';
-import { Link, CreateLinkControl } from './utils/CreateLink';
+import { Link, CreateLinkControl, getSelectedLink } from './utils/CreateLink';
 import { Superscript, SuperscriptControl } from './utils/Superscript';
 import { Subscript, SubscriptControl } from './utils/Subscript';
-import './richTextEditor.scss';
-// import 'font-awesome/css/font-awesome.css';
-import { createDecorators, LinkDecorator, SuperscriptDecorator, SubscriptDecorator } from './utils/decoratorStrategies';
-
-// NOTE: BlockStyleControls is a WIP, so it's commented out.
 import { BlockStyleControls } from './utils/BlockStyleControls';
 import { BlockStyleDropdownControls } from './utils/BlockStyleDropdownControls';
+import { createDecorators, LinkDecorator, SuperscriptDecorator, SubscriptDecorator } from './utils/decoratorStrategies';
+import './richTextEditor.scss';
 
 export default class RichTextEditor extends Component {
     constructor(props) {
@@ -71,17 +68,9 @@ export default class RichTextEditor extends Component {
 
     _toggleLink() {
         const { editorState } = this.state;
-        const contentState = editorState.getCurrentContent();
         const selectionState = editorState.getSelection();
-        const startKey = selectionState.getStartKey();
 
-        function getSelectedLink(selection) {
-            const currentBlock = editorState.getCurrentContent().getBlockForKey(selection.getStartKey());
-            const entityKey = currentBlock.getEntityAt(selection.getStartOffset());
-            return (entityKey !== null && Entity.get(entityKey).getType() === 'LINK') ? entityKey : null;
-        }
-
-        let entityKey = getSelectedLink(selectionState);
+        let entityKey = getSelectedLink(editorState, selectionState);
 
         if (entityKey === null) {
             entityKey = Entity.create('LINK', 'MUTABLE', {url: 'www.google.com'})
