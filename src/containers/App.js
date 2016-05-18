@@ -19,7 +19,21 @@ constructor(props) {
     };
 
     this.state = {
-        value: '<p><strong>Hello</strong> <em>World!</em></p>'
+        value: (`
+            <h1>Text editing shouldn't be hard.</h1>
+            <p>It should be <em>easy</em>.</p>
+            <p><br/></p>
+            <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by<em> </em><em><ins>draft-js</ins></em>)* to add <a href="www.google.com">links</a> or lists:</p>
+            <ul>
+              <li>Unordered,</li>
+              <li>like this one.</li>
+            </ul>
+            <ol>
+              <li>Or ordered,</li>
+              <li>like this one.</li>
+            </ol>
+            <p>* subscripts and superscripts are easy too!</p>
+        `)
     };
 }
 
