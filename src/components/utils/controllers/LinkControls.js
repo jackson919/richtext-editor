@@ -74,7 +74,7 @@ export class CreateLinkControl extends React.Component {
                                         id="insert-url"
                                         title="Insert URL"
                                     >
-                                        Selected Text: <input value={selectedBlock}></input>
+                                        Selected Text: <input defaultValue={selectedBlock}></input>
                                         <br />
                                         Navigate To URL: <input placeholder="Link to page..."></input>
                                     </Popover>
