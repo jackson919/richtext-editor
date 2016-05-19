@@ -9,6 +9,7 @@ import {
     convertFromHTML
 } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+// import { stateToHTML } from './utils/exportState/main';
 import { InlineStyleControls } from './utils/controllers/InlineStyleControls';
 import { CreateLinkControl } from './utils/controllers/LinkControls';
 import { BlockStyleControls } from './utils/controllers/BlockStyleControls';
@@ -36,8 +37,7 @@ export default class RichTextEditor extends Component {
         this.focus = () => this.refs.editor.focus();
 
         this.state = {
-            editorState: this.createEditorState(this.props.value, decorator),
-            urlValue: null
+            editorState: this.createEditorState(this.props.value, decorator)
         };
 
         this.onChange = (editorState) => {
@@ -66,33 +66,27 @@ export default class RichTextEditor extends Component {
 
     _toggleBlockType(blockType) {
         const { editorState } = this.state;
-        this.onChange(
-            RichUtils.toggleBlockType(editorState, blockType)
-        );
+        this.onChange(RichUtils.toggleBlockType(editorState, blockType));
     }
 
     _toggleInlineStyle(inlineStyle) {
         const { editorState } = this.state;
-        this.onChange(
-            RichUtils.toggleInlineStyle(editorState, inlineStyle)
-        );
+        this.onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
     }
 
     _toggleLink() {
         const { editorState } = this.state;
         const selectionState = editorState.getSelection();
-
         let entityKey = getSelectedLink(editorState, selectionState);
 
         if (entityKey === null) {
-            entityKey = Entity.create('LINK', 'MUTABLE', { url: 'www.google.com' });
+            // const inputUrl = window.prompt('Please enter the desired URL');
+            entityKey = Entity.create('LINK', 'MUTABLE', { url: 'https://www.google.com' });
         } else {
             entityKey = null;
         }
 
-        this.onChange(
-            RichUtils.toggleLink(editorState, selectionState, entityKey)
-        );
+        this.onChange(RichUtils.toggleLink(editorState, selectionState, entityKey));
     }
 
     _onChange(editorState) {
@@ -110,6 +104,7 @@ export default class RichTextEditor extends Component {
                 <CreateLinkControl
                     editorState={editorState}
                     onToggle={toggleLink}
+                    showInput={true}
                 />
                 <BlockStyleControls
                     editorState={editorState}
@@ -135,7 +130,6 @@ export default class RichTextEditor extends Component {
 
     render() {
         const editorState = this.state.editorState;
-
         /**
          * If the user changes the block type before entering any text,
          * we can either style the placeholder or hide it.

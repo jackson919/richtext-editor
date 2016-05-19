@@ -1,18 +1,19 @@
 import React from 'react';
 import { Entity } from 'draft-js';
+import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 export const Link = (props) => {
     const { url } = Entity.get(props.entityKey).getData();
     return (
-        <a href={url}
-            style={{
-                color: 'blue',
-                textDecoration: 'underline'
-            }}
-        >
-            {props.children}
-        </a>
-    );
+            <a href={url}
+                style={{
+                    color: 'blue',
+                    textDecoration: 'underline'
+                }}
+            >
+                {props.children}
+            </a>
+            );
 };
 
 export const getSelectedLink = (editorState, selectionState) => {
