@@ -242,10 +242,10 @@ class MarkupGenerator {
                 if (style.has(ITALIC)) {
                     content = `<em>${content}</em>`;
                 }
-                if (style.has(SUPERSCRIPT)) {
+                if (style.has('SUPERSCRIPT')) {
                     content = `<sup>${content}</sup>`;
                 }
-                if (style.has(SUBSCRIPT)) {
+                if (style.has('SUBSCRIPT')) {
                     content = `<sub>${content}</sub>`;
                 }
                 if (style.has(STRIKETHROUGH)) {

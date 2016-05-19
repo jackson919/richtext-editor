@@ -8,8 +8,8 @@ import {
     convertToRaw,
     convertFromHTML
 } from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
-// import { stateToHTML } from './utils/exportState/main';
+// import { stateToHTML } from 'draft-js-export-html';
+import { stateToHTML } from './utils/exportState/main';
 import { InlineStyleControls } from './utils/controllers/InlineStyleControls';
 import { CreateLinkControl } from './utils/controllers/LinkControls';
 import { BlockStyleControls } from './utils/controllers/BlockStyleControls';
