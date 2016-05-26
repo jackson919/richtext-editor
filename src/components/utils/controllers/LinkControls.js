@@ -1,7 +1,7 @@
 import React from 'react';
 import StyleButton from '../StyleButton';
 import { getSelectedLink } from '../decorators/LinkDecorator';
-import { Popover, OverlayTrigger } from 'react-bootstrap';
+import { Popover, OverlayTrigger, FormGroup, FormControl, InputGroup, Button } from 'react-bootstrap';
 
 const LINK = (
     <span className="TextEditor-controls-button">
@@ -68,15 +68,22 @@ export class CreateLinkControl extends React.Component {
                             <OverlayTrigger
                                 trigger="click"
                                 rootClose
-                                placement="bottom"
+                                placement="right"
                                 overlay={(
                                     <Popover
                                         id="insert-url"
-                                        title="Insert URL"
                                     >
-                                        Selected Text: <input defaultValue={selectedBlock}></input>
-                                        <br />
-                                        Navigate To URL: <input placeholder="Link to page..."></input>
+                                        <FormGroup style={{ marginBottom: '0px' }}>
+                                            <InputGroup>
+                                                <FormControl type="text" placeholder="Link to URL"/>
+                                                <InputGroup.Button>
+                                                    <Button><i className="fa fa-check" aria-hidden="true"></i>
+                                                    </Button>
+                                                    <Button><i className="fa fa-remove" aria-hidden="true"></i>
+                                                    </Button>
+                                                </InputGroup.Button>
+                                            </InputGroup>
+                                        </FormGroup>
                                     </Popover>
                                 )}
                             >

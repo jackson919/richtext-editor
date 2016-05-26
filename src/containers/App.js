@@ -64,7 +64,6 @@ export default class App extends Component {
                         <RichTextEditor
                             value={this.state.value}
                             onValueChange={this.onChange}
-                            returnHTML
                         />
 
                         <hr />
