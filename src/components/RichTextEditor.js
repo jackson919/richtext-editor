@@ -6,6 +6,7 @@ import {
     ContentState,
     RichUtils,
     convertToRaw,
+    convertFromRaw,
     convertFromHTML
 } from 'draft-js';
 // import { stateToHTML } from 'draft-js-export-html';
@@ -41,8 +42,14 @@ export default class RichTextEditor extends Component {
         };
 
         this.onChange = (editorState) => {
-            this.setState({ editorState });
-            this.props.onValueChange(stateToHTML(editorState.getCurrentContent()));
+            // If the user desires to interface with HTML, we convert it.
+            if (this.props.returnHTML) {
+                this.setState({ editorState });
+                this.props.onValueChange(stateToHTML(editorState.getCurrentContent()));
+            } else {
+                this.setState({ editorState });
+                this.props.onValueChange(convertToRaw(editorState.getCurrentContent()));
+            }
         };
 
         this.handleKeyCommand = this._handleKeyCommand.bind(this);
@@ -121,8 +128,12 @@ export default class RichTextEditor extends Component {
     _createEditorState(value, decorator) {
         if (!value) {
             return EditorState.createEmpty(decorator);
-        } else {
+        } else if (typeof value === 'string') {
             const blockArray = convertFromHTML(value);
+            const contentState = ContentState.createFromBlockArray(blockArray);
+            return EditorState.createWithContent(contentState, decorator);
+        } else {
+            const blockArray = convertFromRaw(value);
             const contentState = ContentState.createFromBlockArray(blockArray);
             return EditorState.createWithContent(contentState, decorator);
         }

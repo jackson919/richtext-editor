@@ -19,6 +19,7 @@ export default class App extends Component {
         };
 
         this.renderInnerMarkup = () => this._renderInnerMarkup();
+        this.renderReturnedContent = () => this._renderReturnedContent();
 
         this.state = {
             value: (`
@@ -44,8 +45,17 @@ export default class App extends Component {
         return markup;
     }
 
+    _renderReturnedContent(value) {
+        if (typeof value === 'string') {
+            return value;
+        } else {
+            return JSON.stringify(value);
+        }
+    }
+
     render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
+    // The plan is to leverage the returnHtml prop to enable conversion to HTML
         return (
                 <div className="main-app-container">
                     <div className="main-app-nav">RTE</div>
@@ -54,17 +64,18 @@ export default class App extends Component {
                         <RichTextEditor
                             value={this.state.value}
                             onValueChange={this.onChange}
+                            returnHTML
                         />
 
                         <hr />
 
                         <pre style={{ width: '600px', maxWidth: '600px', overflowX: 'scroll' }}>
-                            {this.state.value}
+                            {this._renderReturnedContent(this.state.value)}
                         </pre>
 
                         <hr />
 
-                        <div dangerouslySetInnerHTML={this.renderInnerMarkup()}></div>
+                        {/*<div dangerouslySetInnerHTML={this.renderInnerMarkup()}></div>*/}
                     </div>
                     {/* <Footer />*/}
                 </div>
