@@ -15,10 +15,12 @@ export class CreateLinkControl extends React.Component {
 
         this.state = {
             show: false,
-            urlValue: null
+            urlValue: ''
         };
 
         // this.showInputField = () => this._showInputField();
+        this.handleChange = (e) => this._handleChange(e);
+        this.handleSubmit = () => this._handleSubmit();
     }
 
     // _showInputField() {
@@ -32,6 +34,15 @@ export class CreateLinkControl extends React.Component {
     //         window.alert('test')
     //     }
     // }
+
+    _handleChange(e) {
+        console.log(e.target.value);
+        this.setState({ urlValue: e.target.value });
+    }
+
+    _handleSubmit() {
+        window.alert(this.state.urlValue);
+    }
 
     render() {
         const { editorState } = this.props;
@@ -73,13 +84,28 @@ export class CreateLinkControl extends React.Component {
                                     <Popover
                                         id="insert-url"
                                     >
-                                        <FormGroup style={{ marginBottom: '0px' }}>
-                                            <InputGroup>
-                                                <FormControl type="text" placeholder="Link to URL"/>
+                                        <FormGroup
+                                            style={{ marginBottom: '0px' }}
+                                        >
+                                            <InputGroup bsSize="small">
+                                                <FormControl
+                                                    type="text"
+                                                    value={this.state.urlValue}
+                                                    placeholder="Link to URL"
+                                                    onChange={this.handleChange}
+                                                />
                                                 <InputGroup.Button>
-                                                    <Button><i className="fa fa-check" aria-hidden="true"></i>
+                                                    <Button onClick={this.handleSubmit}>
+                                                        <i
+                                                            className="fa fa-check"
+                                                            aria-hidden="true"
+                                                        />
                                                     </Button>
-                                                    <Button><i className="fa fa-remove" aria-hidden="true"></i>
+                                                    <Button>
+                                                        <i
+                                                            className="fa fa-remove"
+                                                            aria-hidden="true"
+                                                        />
                                                     </Button>
                                                 </InputGroup.Button>
                                             </InputGroup>
