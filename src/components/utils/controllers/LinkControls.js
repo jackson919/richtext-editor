@@ -1,6 +1,7 @@
 import React from 'react';
 import StyleButton from '../StyleButton';
 import { getSelectedLink } from '../decorators/LinkDecorator';
+import { RichUtils, Entity } from 'draft-js';
 import { Popover, OverlayTrigger, FormGroup, FormControl, InputGroup, Button } from 'react-bootstrap';
 
 const LINK = (
@@ -41,7 +42,9 @@ export class CreateLinkControl extends React.Component {
     }
 
     _handleSubmit() {
-        window.alert(this.state.urlValue);
+        console.log('handlesubmit: ', this.state.urlValue);
+        this.props.onSubmit(this.state.urlValue);
+        this.setState({ urlValue: '' });
     }
 
     render() {
@@ -57,7 +60,6 @@ export class CreateLinkControl extends React.Component {
          * currently selected text. However, the user is currently unable to alter the link
          * entity.
          */
-
         const selectedBlock = editorState
             .getCurrentContent()
             .getBlockForKey(startKey)

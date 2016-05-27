@@ -58,6 +58,7 @@ export default class RichTextEditor extends Component {
         this.toggleLink = () => this._toggleLink();
         this.toggleSuper = () => this._toggleSuper();
         this.toggleSub = () => this._toggleSub();
+        this.submitLink = (url) => this._submitLink(url);
     }
 
     _handleKeyCommand(command) {
@@ -81,14 +82,13 @@ export default class RichTextEditor extends Component {
         this.onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
     }
 
-    _toggleLink() {
+    _submitLink(urlValue) {
         const { editorState } = this.state;
         const selectionState = editorState.getSelection();
         let entityKey = getSelectedLink(editorState, selectionState);
 
         if (entityKey === null) {
-            // const inputUrl = window.prompt('Please enter the desired URL');
-            entityKey = Entity.create('LINK', 'MUTABLE', { url: 'https://www.google.com' });
+            entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
         } else {
             entityKey = null;
         }
@@ -96,12 +96,26 @@ export default class RichTextEditor extends Component {
         this.onChange(RichUtils.toggleLink(editorState, selectionState, entityKey));
     }
 
+    _toggleLink() {
+        // const { editorState } = this.state;
+        // const selectionState = editorState.getSelection();
+        // let entityKey = getSelectedLink(editorState, selectionState);
+        //
+        // if (entityKey === null) {
+        //     entityKey = Entity.create('LINK', 'MUTABLE', { url: 'https://www.google.com' });
+        // } else {
+        //     entityKey = null;
+        // }
+        //
+        // this.onChange(RichUtils.toggleLink(editorState, selectionState, entityKey));
+    }
+
     _onChange(editorState) {
         const newValue = this.setState({ editorState: editorState });
         this.props.onValueChange(newValue);
     }
 
-    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink) {
+    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink, submitLink) {
         return (
             <div className="TextEditor-controls-bar">
                 <InlineStyleControls
@@ -111,6 +125,7 @@ export default class RichTextEditor extends Component {
                 <CreateLinkControl
                     editorState={editorState}
                     onToggle={toggleLink}
+                    onSubmit={submitLink}
                     showInput={true}
                 />
                 <BlockStyleControls
@@ -160,8 +175,7 @@ export default class RichTextEditor extends Component {
                     this.toggleInlineStyle,
                     this.toggleBlockType,
                     this.toggleLink,
-                    this.toggleSub,
-                    this.toggleSuper
+                    this.submitLink
                 )}
                 <div className={className} onClick={this.focus}>
                     <Editor
