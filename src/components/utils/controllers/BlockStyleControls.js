@@ -1,5 +1,6 @@
 import React from 'react';
 import StyleButton from '../StyleButton';
+import { ButtonGroup } from 'react-bootstrap';
 
 const OL = (
     <span className="TextEditor-controls-button">
@@ -38,7 +39,7 @@ export const BlockStyleControls = (props) => {
         .getType();
 
     return (
-        <div className="TextEditor-controls-bar">
+        <ButtonGroup className="TextEditor-controls-bar">
             {BLOCK_TYPES.map((type) => {
                 return (
                     <StyleButton
@@ -50,6 +51,6 @@ export const BlockStyleControls = (props) => {
                     />
                 );
             })}
-        </div>
+        </ButtonGroup>
   );
 };

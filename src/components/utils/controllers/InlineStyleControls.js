@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import StyleButton from '../StyleButton';
+import { ButtonGroup } from 'react-bootstrap';
 
 const BOLD = (
     <span className="TextEditor-controls-button">
@@ -44,15 +45,17 @@ export const InlineStyleControls = (props) => {
     const currentStyle = props.editorState.getCurrentInlineStyle();
     return (
         <div className="TextEditor-controls-bar">
-            {INLINE_STYLES.map((type) =>
-                <StyleButton
-                    key={type.style}
-                    active={currentStyle.has(type.style)}
-                    label={type.label}
-                    onToggle={props.onToggle}
-                    style={type.style}
-                />
-            )}
+            <ButtonGroup>
+                {INLINE_STYLES.map((type) =>
+                    <StyleButton
+                        key={type.style}
+                        active={currentStyle.has(type.style)}
+                        label={type.label}
+                        onToggle={props.onToggle}
+                        style={type.style}
+                    />
+                )}
+            </ButtonGroup>
         </div>
    );
 };

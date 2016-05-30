@@ -13,18 +13,18 @@
         padding-right: 2px;
         display: inline-block;
 
-        .TextEditor-controls-button {
-            cursor: pointer;
-            text-align: center;
-            min-width: 20px;
-            margin: 4px;
-
-            &.TextEditor-controls-active {
-                .fa {
-                    color: #0097A7;
-                }
-            }
-        }
+        // .TextEditor-controls-button {
+        //     cursor: pointer;
+        //     text-align: center;
+        //     min-width: 20px;
+        //     margin: 4px;
+        //
+        //     &.TextEditor-controls-active {
+        //         .fa {
+        //             color: #0097A7;
+        //         }
+        //     }
+        // }
     }
 
     .TextEditor-editor {

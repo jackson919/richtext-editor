@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
 export default class StyleButton extends React.Component {
     constructor() {
@@ -16,9 +17,9 @@ export default class StyleButton extends React.Component {
         }
 
         return (
-            <span className={className} onMouseDown={this.onToggle}>
+            <Button className={className} onMouseDown={this.onToggle}>
                 {this.props.label}
-            </span>
+            </Button>
         );
     }
 }
