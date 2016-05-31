@@ -17,7 +17,11 @@ export default class StyleButton extends React.Component {
         }
 
         return (
-            <Button className={className} onMouseDown={this.onToggle}>
+            <Button
+                className={className}
+                onMouseDown={this.onToggle}
+                active={this.props.active}
+            >
                 {this.props.label}
             </Button>
         );
