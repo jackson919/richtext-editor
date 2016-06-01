@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as CounterActions from '../actions/CounterActions';
 import RichTextEditor from '../components/RichTextEditor';
-import { Panel } from 'react-bootstrap';
+import MarkupDemoPanel from './MarkupDemoPanel';
+import StateDemoPanel from './StateDemoPanel';
+
 // import Footer from '../components/Footer';
 
 /**
@@ -20,29 +22,29 @@ export default class App extends Component {
         };
 
         this.getMarkup = (markup) => {
-            this.setState({ markup })
+            this.setState({ markup });
         };
 
         this.renderInnerMarkup = () => this._renderInnerMarkup();
-        this.renderReturnedContent = () => this._renderReturnedContent();
+        this.renderReturnedContent = (value) => this._renderReturnedContent(value);
 
         this.state = {
-            // value: (`
-            //             <h1>Text editing shouldn't be hard.</h1>
-            //             <p>It should be <em>easy</em>.</p>
-            //             <p><br></p>
-            //             <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by <em><ins>draft-js</ins></em>)* to add links or lists: &nbsp;</p>
-            //             <ul>
-            //               <li>Unordered,</li>
-            //               <li>like this one.</li>
-            //             </ul>
-            //             <p><br></p>
-            //             <ol>
-            //               <li>Or ordered,</li>
-            //               <li>like this one.</li>
-            //             </ol>
-            //             <blockquote>* <sub>subscripts</sub> and <sup>superscripts</sup> are easy too!</blockquote>
-            //         `)
+            value: (`
+                        <h1>Text editing shouldn't be hard.</h1>
+                        <p>It should be <em>easy</em>.</p>
+                        <p><br></p>
+                        <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by <em><ins>draft-js</ins></em>)* to add links or lists: &nbsp;</p>
+                        <ul>
+                          <li>Unordered,</li>
+                          <li>like this one.</li>
+                        </ul>
+                        <p><br></p>
+                        <ol>
+                          <li>Or ordered,</li>
+                          <li>like this one.</li>
+                        </ol>
+                        <blockquote>* <sub>subscripts</sub> and <sup>superscripts</sup> are easy too!</blockquote>
+                    `)
         };
     }
 
@@ -60,8 +62,6 @@ export default class App extends Component {
     }
 
     render() {
-    // we can use ES6's object destructuring to effectively 'unpack' our props
-    // The plan is to leverage the returnHtml prop to enable conversion to HTML
         return (
                 <div className="main-app-container">
                     <div className="main-app-nav">RTE</div>
@@ -74,19 +74,17 @@ export default class App extends Component {
                         />
 
                         <hr />
-                        <Panel header={<h3>Editor State: Draft + Immutable</h3>} bsStyle="info">
-                            <pre style={{ width: '600px', maxWidth: '600px', maxHeight: '250px', fontSize: '10px' }}>
-                                {this._renderReturnedContent(this.state.value)}
-                            </pre>
-                        </Panel>
+
+                        <StateDemoPanel
+                            stateToRender={this.renderReturnedContent(this.state.value)}
+                        />
 
                         <hr />
 
-                        <Panel header={<h3>Render RTE's HTML Output</h3>} bsStyle="success">
-                            <div style={{ width: '600px', maxWidth: '600px', maxHeight: '250px' }}>
-                                <div dangerouslySetInnerHTML={this.renderInnerMarkup()}></div>
-                            </div>
-                        </Panel>
+                        <MarkupDemoPanel
+                            markup={this.renderInnerMarkup}
+                            rawMarkup={this.state.markup}
+                        />
                     </div>
                     {/* <Footer />*/}
                 </div>
