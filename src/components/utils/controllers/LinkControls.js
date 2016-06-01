@@ -16,36 +16,44 @@ export class CreateLinkControl extends React.Component {
 
         this.state = {
             show: false,
-            urlValue: ''
+            urlValue: this._getSelectedBlockURL()
         };
 
-        // this.showInputField = () => this._showInputField();
         this.handleChange = (e) => this._handleChange(e);
         this.handleSubmit = () => this._handleSubmit();
+        this.handleReturn = (e) => this._handleReturn(e);
+        this.getSelectedBlockURL = () => this._getSelectedBlockURL();
     }
 
-    // _showInputField() {
-    //     const { editorState } = this.props;
-    //     const selectionState = editorState.getSelection();
-    //     const isSelected = getSelectedLink(editorState, selectionState);
-    //
-    //     if (isSelected !== null) {
-    //         return null;
-    //     } else {
-    //         window.alert('test')
-    //     }
-    // }
-
     _handleChange(e) {
-        console.log(e.target.value);
         this.setState({ urlValue: e.target.value });
     }
 
     _handleSubmit() {
-        console.log('handlesubmit: ', this.state.urlValue);
         this.props.onSubmit(this.state.urlValue);
-        this.setState({ urlValue: '' });
+        this.setState({ urlValue: this.getSelectedBlockURL() });
     }
+
+    _getSelectedBlockURL() {
+        const { editorState } = this.props;
+        const selectionState = editorState.getSelection();
+        const startKey = selectionState.getStartKey();
+        const block = editorState.getCurrentContent().getBlockForKey(startKey);
+
+        if (block.getEntityAt(0) && this.state.urlValue !== '') {
+            return Entity.get(block.getEntityAt(0)).getData().url;
+        } else {
+            return '';
+        }
+    }
+
+    // TODO: Implement handler for the 'return' key to submit URL
+    // _handleReturn(e) {
+    //     console.log('handleReturn: ', e)
+    //     if (e.key === 'Enter') {
+    //         this.handleSubmit();
+    //     }
+    // }
 
     render() {
         const { editorState } = this.props;
@@ -54,6 +62,22 @@ export class CreateLinkControl extends React.Component {
         const startKey = selectionState.getStartKey();
         const start = selectionState.getStartOffset();
         const end = selectionState.getEndOffset();
+        const block = editorState.getCurrentContent().getBlockForKey(startKey);
+
+        // if (block.getEntityAt(0)) {
+        //     const data = Entity.get(block.getEntityAt(0)).getData();
+        //     console.log('data is ', JSON.stringify(data))
+        // }
+        //
+        // const key = editorState.getCurrentContent().getBlockForKey(startKey).getEntityAt(0);
+        //
+        // let selectedURL;
+        //
+        // if (key) { selectedUrl = Entity.get(key)}
+        //
+        // if (selectedURL && this.state.urlValue === '') {
+        //     this.setState({ urlValue: selectedURL });
+        // }
 
         /**
          * NOTE: This bit will need some cleanup. We take the selected block and slice to get the
@@ -66,6 +90,16 @@ export class CreateLinkControl extends React.Component {
             .getText().slice(start, end);
 
         if (this.props.showInput) {
+            // let data = null;
+            //
+            // if (block.getEntityAt(0)) {
+            //     data = Entity.get(block.getEntityAt(0)).getData();
+            //
+            //     if (this.state.urlValue === '') {
+            //         this.setState({ urlValue: data.url })
+            //         console.log('data is ', JSON.stringify(data.url))
+            //     }
+            // }
             /**
              * TODO: Pull inline style out into stylesheet.
              * TODO: Extract the overlay/popover component and also handle
@@ -74,7 +108,6 @@ export class CreateLinkControl extends React.Component {
             return (
                         <div
                             className="TextEditor-controls-bar"
-                            onClick={this.showInputField}
                             ref="target"
                             style={{ position: 'relative' }}
                         >
@@ -125,13 +158,12 @@ export class CreateLinkControl extends React.Component {
                                 </div>
                             </OverlayTrigger>
                         </div>
-            );
+                    );
         }
 
         return (
             <div
                 className="TextEditor-controls-bar"
-                onClick={this.showInputField}
             >
                 <StyleButton
                     active={isSelected}

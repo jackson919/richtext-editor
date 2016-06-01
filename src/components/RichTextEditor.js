@@ -43,13 +43,16 @@ export default class RichTextEditor extends Component {
 
         this.onChange = (editorState) => {
             // If the user desires to interface with HTML, we convert it.
-            if (this.props.returnHTML) {
-                this.setState({ editorState });
-                this.props.onValueChange(stateToHTML(editorState.getCurrentContent()));
-            } else {
+            // if (this.props.returnHTML) {
+            //     this.setState({ editorState });
+            //     this.props.onValueChange(stateToHTML(editorState.getCurrentContent()));
+            // } else {
+                if (!!this.props.returnHTML) {
+                    this.props.returnHTML(stateToHTML(editorState.getCurrentContent()));
+                }
                 this.setState({ editorState });
                 this.props.onValueChange(convertToRaw(editorState.getCurrentContent()));
-            }
+            // }
         };
 
         this.handleKeyCommand = this._handleKeyCommand.bind(this);
@@ -112,6 +115,7 @@ export default class RichTextEditor extends Component {
 
     _onChange(editorState) {
         const newValue = this.setState({ editorState: editorState });
+
         this.props.onValueChange(newValue);
     }
 

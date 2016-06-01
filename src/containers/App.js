@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as CounterActions from '../actions/CounterActions';
 import RichTextEditor from '../components/RichTextEditor';
+import { Panel } from 'react-bootstrap';
 // import Footer from '../components/Footer';
 
 /**
@@ -18,30 +19,35 @@ export default class App extends Component {
             this.setState({ value });
         };
 
+        this.getMarkup = (markup) => {
+            this.setState({ markup })
+        };
+
         this.renderInnerMarkup = () => this._renderInnerMarkup();
         this.renderReturnedContent = () => this._renderReturnedContent();
 
         this.state = {
             // value: (`
-            //     <h1>Text editing shouldn't be hard.</h1>
-            //     <p>It should be <em>easy</em>.</p>
-            //     <p><br/></p>
-            //     <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by<em> </em><em><ins>draft-js</ins></em>)* to add <a href="www.google.com">links</a> or lists:</p>
-            //     <ul>
-            //       <li>Unordered,</li>
-            //       <li>like this one.</li>
-            //     </ul>
-            //     <ol>
-            //       <li>Or ordered,</li>
-            //       <li>like this one.</li>
-            //     </ol>
-            //     <p>* subscripts and superscripts are easy too!</p>
-            // `)
+            //             <h1>Text editing shouldn't be hard.</h1>
+            //             <p>It should be <em>easy</em>.</p>
+            //             <p><br></p>
+            //             <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by <em><ins>draft-js</ins></em>)* to add links or lists: &nbsp;</p>
+            //             <ul>
+            //               <li>Unordered,</li>
+            //               <li>like this one.</li>
+            //             </ul>
+            //             <p><br></p>
+            //             <ol>
+            //               <li>Or ordered,</li>
+            //               <li>like this one.</li>
+            //             </ol>
+            //             <blockquote>* <sub>subscripts</sub> and <sup>superscripts</sup> are easy too!</blockquote>
+            //         `)
         };
     }
 
     _renderInnerMarkup() {
-        const markup = { __html: this.state.value };
+        const markup = { __html: this.state.markup };
         return markup;
     }
 
@@ -49,7 +55,7 @@ export default class App extends Component {
         if (typeof value === 'string') {
             return value;
         } else {
-            return JSON.stringify(value);
+            return JSON.stringify(value, null, 2);
         }
     }
 
@@ -64,18 +70,23 @@ export default class App extends Component {
                         <RichTextEditor
                             value={this.state.value}
                             onValueChange={this.onChange}
-                            
+                            returnHTML={this.getMarkup}
                         />
 
                         <hr />
-
-                        <pre style={{ width: '600px', maxWidth: '600px', overflowX: 'scroll' }}>
-                            {this._renderReturnedContent(this.state.value)}
-                        </pre>
+                        <Panel header={<h3>Editor State: Draft + Immutable</h3>} bsStyle="info">
+                            <pre style={{ width: '600px', maxWidth: '600px', maxHeight: '250px', fontSize: '10px' }}>
+                                {this._renderReturnedContent(this.state.value)}
+                            </pre>
+                        </Panel>
 
                         <hr />
 
-                        {/*<div dangerouslySetInnerHTML={this.renderInnerMarkup()}></div>*/}
+                        <Panel header={<h3>Render RTE's HTML Output</h3>} bsStyle="success">
+                            <div style={{ width: '600px', maxWidth: '600px', maxHeight: '250px' }}>
+                                <div dangerouslySetInnerHTML={this.renderInnerMarkup()}></div>
+                            </div>
+                        </Panel>
                     </div>
                     {/* <Footer />*/}
                 </div>
