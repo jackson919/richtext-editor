@@ -2,7 +2,7 @@
     background: #fff;
     border: 1px solid #ccc;
     font-family: 'Source Sans Pro', serif;
-    font-size: 14px;
+    font-size: 12px;
     width: 600px;
 
     .TextEditor-controls-bar {
@@ -12,19 +12,6 @@
         padding-left: 2px;
         padding-right: 2px;
         display: inline-block;
-
-        // .TextEditor-controls-button {
-        //     cursor: pointer;
-        //     text-align: center;
-        //     min-width: 20px;
-        //     margin: 4px;
-        //
-        //     &.TextEditor-controls-active {
-        //         .fa {
-        //             color: #0097A7;
-        //         }
-        //     }
-        // }
     }
 
     .TextEditor-editor {

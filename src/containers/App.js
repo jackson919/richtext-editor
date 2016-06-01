@@ -5,7 +5,6 @@ import * as CounterActions from '../actions/CounterActions';
 import RichTextEditor from '../components/RichTextEditor';
 import MarkupDemoPanel from './MarkupDemoPanel';
 import StateDemoPanel from './StateDemoPanel';
-
 // import Footer from '../components/Footer';
 
 /**

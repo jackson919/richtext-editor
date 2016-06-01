@@ -5,11 +5,13 @@ export default class StyleDropdown extends React.Component {
     constructor() {
         super();
         this.changeSelectHandler = (event) => this._changeSelectHandler(event);
+
+        this.state = {
+            selectedBlockType: 'Default'
+        };
     }
 
-    _changeSelectHandler(event) {
-        event.preventDefault();
-        const value = event.target.value;
+    _changeSelectHandler(value) {
         const style = this.props.blockTypes.reduce((result, type) => {
             if (!!result) {
                 return result;
@@ -18,13 +20,14 @@ export default class StyleDropdown extends React.Component {
             }
         }, null);
 
+        this.setState({ selectedBlockType: value });
         this.props.onChange(style);
     }
 
     /**
      * TODO: Correctly remove texteditor controls button, and ensure correct rendering of style
      */
-     // 
+     //
     //  <SplitButton title="Dropdown right" pullRight id="split-button-pull-right">
     //      <MenuItem eventKey="1">Action</MenuItem>
     //      <MenuItem eventKey="2">Another action</MenuItem>
@@ -39,10 +42,10 @@ export default class StyleDropdown extends React.Component {
         }
 
         return (
-            <SplitButton onChange={this.changeSelectHandler}>
+            <SplitButton title={this.state.selectedBlockType} onSelect={this.changeSelectHandler}>
                 {this.props.blockTypes.map((type) => {
                     return (
-                        <MenuItem eventKey={type.label} value={type.label}>
+                        <MenuItem eventKey={type.label} value={type.label} key={type.label} id={type.label}>
                             {type.label}
                         </MenuItem>
                     );

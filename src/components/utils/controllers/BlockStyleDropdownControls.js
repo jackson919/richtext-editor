@@ -2,13 +2,6 @@ import React from 'react';
 import StyleDropdown from '../StyleDropdown';
 import { SplitButton, MenuItem } from 'react-bootstrap';
 
-<SplitButton title="Dropdown right" pullRight id="split-button-pull-right">
-    <MenuItem eventKey="1">Action</MenuItem>
-    <MenuItem eventKey="2">Another action</MenuItem>
-    <MenuItem eventKey="3">Something else here</MenuItem>
-    <MenuItem divider />
-    <MenuItem eventKey="4">Separated link</MenuItem>
-</SplitButton>
 /**
  * Array of types of block styles that can be made in our text editor.
  * @type {Array}

@@ -31,5 +31,5 @@ export default class StateDemoPanel extends Component {
 }
 
 StateDemoPanel.propTypes = {
-    stateToRender: PropTypes.object
+    stateToRender: PropTypes.string
 };

@@ -40,5 +40,5 @@ export default class MarkupDemoPanel extends Component {
 
 MarkupDemoPanel.propTypes = {
     rawMarkup: PropTypes.string,
-    markup: PropTypes.function
+    markup: PropTypes.any
 };
