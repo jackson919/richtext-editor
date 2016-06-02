@@ -5,7 +5,6 @@ import * as CounterActions from '../actions/CounterActions';
 import RichTextEditor from '../components/RichTextEditor';
 import MarkupDemoPanel from './MarkupDemoPanel';
 import StateDemoPanel from './StateDemoPanel';
-// import Footer from '../components/Footer';
 
 /**
  * It is common practice to have a 'Root' container/component require our main App (this one).
@@ -28,22 +27,7 @@ export default class App extends Component {
         this.renderReturnedContent = (value) => this._renderReturnedContent(value);
 
         this.state = {
-            // value: (`
-            //             <h1>Text editing shouldn't be hard.</h1>
-            //             <p>It should be <em>easy</em>.</p>
-            //             <p><br></p>
-            //             <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by <em><ins>draft-js</ins></em>)* to add links or lists: &nbsp;</p>
-            //             <ul>
-            //               <li>Unordered,</li>
-            //               <li>like this one.</li>
-            //             </ul>
-            //             <p><br></p>
-            //             <ol>
-            //               <li>Or ordered,</li>
-            //               <li>like this one.</li>
-            //             </ol>
-            //             <blockquote>* <sub>subscripts</sub> and <sup>superscripts</sup> are easy too!</blockquote>
-            //         `)
+            // value: '<p>Hello World!</p>'
         };
     }
 
@@ -63,7 +47,7 @@ export default class App extends Component {
     render() {
         return (
                 <div className="main-app-container">
-                    <div className="main-app-nav">RTE</div>
+                    <div className="main-app-nav">React Rich Text Editor</div>
                     <div>
                         <br />
                         <RichTextEditor
@@ -71,21 +55,16 @@ export default class App extends Component {
                             onValueChange={this.onChange}
                             returnHTML={this.getMarkup}
                         />
-
                         <hr />
-
                         <StateDemoPanel
                             stateToRender={this.renderReturnedContent(this.state.value)}
                         />
-
                         <hr />
-
                         <MarkupDemoPanel
                             markup={this.renderInnerMarkup}
                             rawMarkup={this.state.markup}
                         />
                     </div>
-                    {/* <Footer />*/}
                 </div>
                 );
     }

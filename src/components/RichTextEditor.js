@@ -62,6 +62,8 @@ export default class RichTextEditor extends Component {
         this.toggleSuper = () => this._toggleSuper();
         this.toggleSub = () => this._toggleSub();
         this.submitLink = (url) => this._submitLink(url);
+        this.noop = () => this._noop();
+        this.renderControls = () => this._renderControls();
     }
 
     _handleKeyCommand(command) {
@@ -105,26 +107,32 @@ export default class RichTextEditor extends Component {
         this.props.onValueChange(newValue);
     }
 
-    _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink, submitLink) {
+    _noop() {
+        return;
+    }
+
+    _renderControls() {
+        const { editorState } = this.state;
+
         return (
             <div className="TextEditor-controls-container">
                 <InlineStyleControls
                     editorState={editorState}
-                    onToggle={toggleInlineStyle}
+                    onToggle={this.toggleInlineStyle}
                 />
                 <CreateLinkControl
                     editorState={editorState}
-                    onToggle={toggleLink}
-                    onSubmit={submitLink}
+                    onToggle={this.noop}
+                    onSubmit={this.submitLink}
                     showInput={true}
                 />
                 <BlockStyleControls
                     editorState={editorState}
-                    onToggle={toggleBlockType}
+                    onToggle={this.toggleBlockType}
                 />
                 <BlockStyleDropdownControls
                     editorState={editorState}
-                    onChange={toggleBlockType}
+                    onChange={this.toggleBlockType}
                 />
             </div>
         );
@@ -145,7 +153,7 @@ export default class RichTextEditor extends Component {
     }
 
     render() {
-        const editorState = this.state.editorState;
+        const { editorState } = this.state;
         /**
          * If the user changes the block type before entering any text,
          * we can either style the placeholder or hide it.
@@ -160,13 +168,7 @@ export default class RichTextEditor extends Component {
 
         return (
             <div className="TextEditor-root">
-                {this._renderControls(
-                    editorState,
-                    this.toggleInlineStyle,
-                    this.toggleBlockType,
-                    this.toggleLink,
-                    this.submitLink
-                )}
+                {this.renderControls()}
                 <div className={className} onClick={this.focus}>
                     <Editor
                         editorState={editorState}
