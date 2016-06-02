@@ -9,8 +9,7 @@ import {
     convertFromRaw,
     convertFromHTML
 } from 'draft-js';
-// import { stateToHTML } from 'draft-js-export-html';
-import { stateToHTML } from './utils/exportState/main';
+import { stateToHTML } from 'draft-js-export-markup';
 import { InlineStyleControls } from './utils/controllers/InlineStyleControls';
 import { CreateLinkControl } from './utils/controllers/LinkControls';
 import { BlockStyleControls } from './utils/controllers/BlockStyleControls';
@@ -23,6 +22,13 @@ import {
     SubscriptDecorator
 } from './utils/decorators/decoratorStrategies';
 import './richTextEditor.scss';
+
+const INLINE_MAP = {
+    inlineTags: {
+        SUPERSCRIPT: 'sup',
+        SUBSCRIPT: 'sub'
+    }
+};
 
 export default class RichTextEditor extends Component {
     constructor(props) {
@@ -42,17 +48,11 @@ export default class RichTextEditor extends Component {
         };
 
         this.onChange = (editorState) => {
-            // If the user desires to interface with HTML, we convert it.
-            // if (this.props.returnHTML) {
-            //     this.setState({ editorState });
-            //     this.props.onValueChange(stateToHTML(editorState.getCurrentContent()));
-            // } else {
-                if (!!this.props.returnHTML) {
-                    this.props.returnHTML(stateToHTML(editorState.getCurrentContent()));
-                }
-                this.setState({ editorState });
-                this.props.onValueChange(convertToRaw(editorState.getCurrentContent()));
-            // }
+            if (!!this.props.returnHTML) {
+                this.props.returnHTML(stateToHTML(editorState.getCurrentContent(), INLINE_MAP));
+            }
+            this.setState({ editorState });
+            this.props.onValueChange(convertToRaw(editorState.getCurrentContent()));
         };
 
         this.handleKeyCommand = this._handleKeyCommand.bind(this);
@@ -99,20 +99,6 @@ export default class RichTextEditor extends Component {
         this.onChange(RichUtils.toggleLink(editorState, selectionState, entityKey));
     }
 
-    _toggleLink() {
-        // const { editorState } = this.state;
-        // const selectionState = editorState.getSelection();
-        // let entityKey = getSelectedLink(editorState, selectionState);
-        //
-        // if (entityKey === null) {
-        //     entityKey = Entity.create('LINK', 'MUTABLE', { url: 'https://www.google.com' });
-        // } else {
-        //     entityKey = null;
-        // }
-        //
-        // this.onChange(RichUtils.toggleLink(editorState, selectionState, entityKey));
-    }
-
     _onChange(editorState) {
         const newValue = this.setState({ editorState: editorState });
 
@@ -121,7 +107,7 @@ export default class RichTextEditor extends Component {
 
     _renderControls(editorState, toggleInlineStyle, toggleBlockType, toggleLink, submitLink) {
         return (
-            <div className="TextEditor-controls-bar">
+            <div className="TextEditor-controls-container">
                 <InlineStyleControls
                     editorState={editorState}
                     onToggle={toggleInlineStyle}
@@ -201,7 +187,7 @@ function createEmptyValue() {
 
 function contentAsHTML(editorState) {
     const contentState = editorState.getCurrentContent();
-    return stateToHTML(contentState);
+    return stateToHTML(contentState, INLINE_MAP);
 }
 
 function contentAsJS(editorState) {

@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "draft-js": "^0.7.0",
-    "draft-js-export-html": "^0.1.13",
+    "draft-js-export-markup": "^0.2.2",
     "font-awesome": "^4.6.1",
     "react": "^0.14.3",
     "react-bootstrap": "^0.29.4",

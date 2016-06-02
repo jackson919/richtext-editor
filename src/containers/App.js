@@ -28,22 +28,22 @@ export default class App extends Component {
         this.renderReturnedContent = (value) => this._renderReturnedContent(value);
 
         this.state = {
-            value: (`
-                        <h1>Text editing shouldn't be hard.</h1>
-                        <p>It should be <em>easy</em>.</p>
-                        <p><br></p>
-                        <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by <em><ins>draft-js</ins></em>)* to add links or lists: &nbsp;</p>
-                        <ul>
-                          <li>Unordered,</li>
-                          <li>like this one.</li>
-                        </ul>
-                        <p><br></p>
-                        <ol>
-                          <li>Or ordered,</li>
-                          <li>like this one.</li>
-                        </ol>
-                        <blockquote>* <sub>subscripts</sub> and <sup>superscripts</sup> are easy too!</blockquote>
-                    `)
+            // value: (`
+            //             <h1>Text editing shouldn't be hard.</h1>
+            //             <p>It should be <em>easy</em>.</p>
+            //             <p><br></p>
+            //             <p>Use <strong>react-rich-text-editor </strong>(<em>powered</em> by <em><ins>draft-js</ins></em>)* to add links or lists: &nbsp;</p>
+            //             <ul>
+            //               <li>Unordered,</li>
+            //               <li>like this one.</li>
+            //             </ul>
+            //             <p><br></p>
+            //             <ol>
+            //               <li>Or ordered,</li>
+            //               <li>like this one.</li>
+            //             </ol>
+            //             <blockquote>* <sub>subscripts</sub> and <sup>superscripts</sup> are easy too!</blockquote>
+            //         `)
         };
     }
 
@@ -92,8 +92,6 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-    counter: PropTypes.number.isRequired,
-    actions: PropTypes.object.isRequired
 };
 
 /**
