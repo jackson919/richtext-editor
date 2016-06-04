@@ -16,6 +16,20 @@ export const Link = (props) => {
             );
 };
 
+export const ImplicitLink = (props) => {
+    return (
+        <a
+            href={props.decoratedText}
+            style={{
+                color: 'blue',
+                textDecoration: 'underline'
+            }}
+        >
+            {props.children}
+        </a>
+    );
+};
+
 export const getSelectedLink = (editorState, selectionState) => {
     const startKey = selectionState.getStartKey();
     const currentBlock = editorState.getCurrentContent().getBlockForKey(startKey);

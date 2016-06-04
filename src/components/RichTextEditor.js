@@ -17,6 +17,7 @@ import { BlockStyleDropdownControls } from './utils/controllers/BlockStyleDropdo
 import { getSelectedLink } from './utils/decorators/LinkDecorator';
 import {
     createDecorators,
+    LinkifyTextDecorator,
     LinkDecorator,
     SuperscriptDecorator,
     SubscriptDecorator
@@ -35,6 +36,7 @@ export default class RichTextEditor extends Component {
         super(props);
 
         const decorator = createDecorators([
+            LinkifyTextDecorator,
             LinkDecorator,
             SuperscriptDecorator,
             SubscriptDecorator
@@ -48,11 +50,15 @@ export default class RichTextEditor extends Component {
         };
 
         this.onChange = (editorState) => {
-            if (!!this.props.returnHTML) {
-                this.props.returnHTML(stateToHTML(editorState.getCurrentContent(), INLINE_MAP));
+            const { returnHTML, onValueChange } = this.props;
+            const currentContent = editorState.getCurrentContent();
+
+            if (!!returnHTML) {
+                returnHTML(stateToHTML(currentContent, INLINE_MAP));
             }
+
             this.setState({ editorState });
-            this.props.onValueChange(convertToRaw(editorState.getCurrentContent()));
+            onValueChange(convertToRaw(currentContent));
         };
 
         this.handleKeyCommand = this._handleKeyCommand.bind(this);
@@ -102,8 +108,7 @@ export default class RichTextEditor extends Component {
     }
 
     _onChange(editorState) {
-        const newValue = this.setState({ editorState: editorState });
-
+        const newValue = this.setState({ editorState });
         this.props.onValueChange(newValue);
     }
 
@@ -169,7 +174,10 @@ export default class RichTextEditor extends Component {
         return (
             <div className="TextEditor-root">
                 {this.renderControls()}
-                <div className={className} onClick={this.focus}>
+                <div
+                    className={className}
+                    onClick={this.focus}
+                >
                     <Editor
                         editorState={editorState}
                         handleKeyCommand={this.handleKeyCommand}

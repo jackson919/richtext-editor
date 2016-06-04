@@ -27,7 +27,7 @@ export default class App extends Component {
         this.renderReturnedContent = (value) => this._renderReturnedContent(value);
 
         this.state = {
-            // value: '<p>Hello World!</p>'
+            // value: '<h1>Hello <strong>Syapse</strong>!</h1><p><br></p><blockquote>With<ins><em> rich text editing</em></ins>, what you see is what you get.</blockquote>'
         };
     }
 

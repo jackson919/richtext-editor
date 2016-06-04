@@ -49,10 +49,12 @@
     "draft-js": "^0.7.0",
     "draft-js-export-markup": "^0.2.2",
     "font-awesome": "^4.6.1",
+    "linkify-it": "^1.2.4",
     "react": "^0.14.3",
     "react-bootstrap": "^0.29.4",
     "react-dom": "^0.14.3",
     "react-redux": "^4.1.1",
-    "redux-thunk": "^1.0.3"
+    "redux-thunk": "^1.0.3",
+    "tlds": "^1.125.0"
   }
 }

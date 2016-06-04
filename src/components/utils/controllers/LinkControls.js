@@ -112,16 +112,12 @@ export class CreateLinkControl extends React.Component {
                             style={{ position: 'relative' }}
                         >
                             <OverlayTrigger
-                                trigger="click"
                                 rootClose
+                                trigger="click"
                                 placement="right"
                                 overlay={(
-                                    <Popover
-                                        id="insert-url"
-                                    >
-                                        <FormGroup
-                                            style={{ marginBottom: '0px' }}
-                                        >
+                                    <Popover id="insert-url">
+                                        <FormGroup style={{ marginBottom: '0px' }}>
                                             <InputGroup bsSize="small">
                                                 <FormControl
                                                     type="text"
