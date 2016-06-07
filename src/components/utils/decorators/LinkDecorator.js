@@ -7,8 +7,7 @@ export const Link = (props) => {
                 <a
                     href={url}
                     style={{
-                        color: 'blue',
-                        textDecoration: 'underline'
+                        cursor: 'pointer'
                     }}
                 >
                     {props.children}
@@ -16,13 +15,14 @@ export const Link = (props) => {
             );
 };
 
+// TODO: It would be worthwhile to examine if there is utility in actually converting
+// a pasted URL into an <a> tag.
 export const ImplicitLink = (props) => {
     return (
         <a
             href={props.decoratedText}
             style={{
-                color: 'blue',
-                textDecoration: 'underline'
+                cursor: 'pointer'
             }}
         >
             {props.children}

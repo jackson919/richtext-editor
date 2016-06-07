@@ -19,35 +19,23 @@ export const createDecorators = (decoratorObjectsArray) => {
 const linkify = linkifyIt();
 linkify.tlds(tlds);
 
+// TODO: Currently, our linkify'd text is only a styled text decorator
 const linkifyTextStrategy = (contentBlock, callback) => {
     const links = linkify.match(contentBlock.get('text'));
+    const list = contentBlock.getCharacterList();
 
     // links is a "Match" object provided by linkify.
     if (typeof links !== 'undefined' && links !== null) {
         for (let i = 0; i < links.length; i++) {
+            // const urlValue = links[i].url;
+            // const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
+            list.forEach((char) => {
+                CharacterMetadata.applyStyle(char, 'LINK');
+            });
             callback(links[i].index, links[i].lastIndex);
         }
     }
 };
-
-// const linkifyTextStrategy = (contentBlock, callback) => {
-//     const links = linkify.match(contentBlock.get('text'));
-//     const list = contentBlock.getCharacterList();
-//
-//     // links is a "Match" object provided by linkify.
-//     if (typeof links !== 'undefined' && links !== null) {
-//         for (let i = 0; i < links.length; i++) {
-//             const urlValue = links[i].url;
-//             const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
-//
-//             list.forEach((char) => {
-//                 CharacterMetadata.applyEntity(char, entityKey);
-//             });
-//
-//             callback(links[i].index, links[i].lastIndex);
-//         }
-//     }
-// };
 
 const findLinkEntities = (contentBlock, callback) => {
     contentBlock.findEntityRanges((character) => {
