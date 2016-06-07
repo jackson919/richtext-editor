@@ -5,6 +5,7 @@ export default class StyleDropdown extends React.Component {
     constructor() {
         super();
         this.changeSelectHandler = (event) => this._changeSelectHandler(event);
+        this.renderMenuItems = () => this._renderMenuItems();
 
         this.state = {
             selectedBlockType: 'Default'
@@ -24,6 +25,23 @@ export default class StyleDropdown extends React.Component {
         this.props.onChange(style);
     }
 
+    _renderMenuItems() {
+        const { blockTypes } = this.props;
+
+        return blockTypes.map((type) => {
+            return (
+                <MenuItem
+                    eventKey={type.label}
+                    value={type.label}
+                    key={type.label}
+                    id={type.label}
+                >
+                    {type.label}
+                </MenuItem>
+            );
+        });
+    }
+
     /**
      * TODO: Correctly remove texteditor controls button, and ensure correct rendering of style
      */
@@ -39,18 +57,7 @@ export default class StyleDropdown extends React.Component {
                 onSelect={this.changeSelectHandler}
                 id={this.state.selectedBlockType}
             >
-                {this.props.blockTypes.map((type) => {
-                    return (
-                        <MenuItem
-                            eventKey={type.label}
-                            value={type.label}
-                            key={type.label}
-                            id={type.label}
-                        >
-                            {type.label}
-                        </MenuItem>
-                    );
-                })}
+                {this.renderMenuItems()}
             </SplitButton>
         );
     }
